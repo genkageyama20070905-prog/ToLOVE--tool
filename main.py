@@ -1,7 +1,7 @@
 import streamlit as st
 
-st.set_page_config(page_title="メモ入力補助ツール", layout="centered")
-st.title("メモ入力補助ツール")
+st.set_page_config(page_title="メモ", layout="centered")
+st.title("メモ")
 
 # 記録を保存するためのセッション
 if 'memo_log' not in st.session_state:
@@ -13,14 +13,14 @@ if 'last_action' not in st.session_state:
 st.info(f"💡 最後に押したボタン: **{st.session_state.last_action}**")
 
 # --- ① ゲーム数入力 ---
-st.subheader("① ゲーム数設定")
+st.subheader("① 当選ゲーム数")
 game_input = st.number_input("ゲーム数", min_value=0, step=1, value=0, key="game")
 if st.button("🔢 ゲーム数を出力"):
     st.session_state.memo_log += f"\n{game_input} "
     st.session_state.last_action = f"ゲーム数({game_input})"
 
 # --- ② 演出・状態 ---
-st.subheader("② 演出・状態 (次は改行)")
+st.subheader("② 当選契機")
 c1, c2, c3, c4 = st.columns(4)
 with c1:
     if st.button("バルーン"): 
@@ -39,8 +39,8 @@ with c4:
         st.session_state.memo_log += "追憶\n"
         st.session_state.last_action = "追憶"
 
-# --- ③ 小役・対応 ---
-st.subheader("③ 小役・対応 (⭕️の後に報酬)")
+# --- ③ ST子役　---
+st.subheader("③ 小役・対応 ")
 c5, c6, c7, c8, c9, c10 = st.columns(6)
 with c5:
     if st.button("🔔"): 
@@ -67,8 +67,8 @@ with c10:
         st.session_state.memo_log += " ⭕️ "
         st.session_state.last_action = "⭕️"
 
-# --- ④ 報酬設定 ---
-st.subheader("④ 報酬設定 (次は改行)")
+# --- ④ 報酬　---
+st.subheader("④ 報酬　")
 reward_val = st.number_input("報酬枚数", min_value=0, step=10, value=0, key="reward")
 c11, c12, c13 = st.columns(3)
 with c11:
