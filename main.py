@@ -2,12 +2,8 @@ import streamlit as st
 
 st.set_page_config(page_title="メモ入力補助ツール", layout="centered")
 
-# カスタムCSSでボタンの見た目を少し調整（iPhoneで見やすく）
-st.markdown("""
-    <style>
-    .stButton>button { width: 100%; margin-bottom: 5px; }
-    </style>
-    """, unsafe_allow_index=True)
+# カスタムCSS（ボタンを画面幅いっぱいに広げる）
+st.markdown("<style>.stButton>button { width: 100%; }</style>", unsafe_allow_index=True)
 
 st.title("メモ入力補助ツール")
 
@@ -17,7 +13,7 @@ if 'memo_log' not in st.session_state:
 if 'last' not in st.session_state:
     st.session_state.last = ""
 
-# ボタンのラベル（名前）に印をつける関数
+# ボタンのラベルに印をつける関数
 def label(name):
     return f"{name} 👈" if st.session_state.last == name else name
 
@@ -46,7 +42,8 @@ with c4:
 
 # --- ③ 小役・対応 ---
 st.subheader("③ 小役・対応")
-c5, c6, c7, c8, c9, c10 = st.columns(3) # iPhoneで見やすいよう2段に分けます
+# 1段目（3列）
+c5, c6, c7 = st.columns(3)
 with c5:
     if st.button(label("🔔")): 
         st.session_state.memo_log += "🔔"; st.session_state.last = "🔔"
@@ -56,6 +53,8 @@ with c6:
 with c7:
     if st.button(label("対応")): 
         st.session_state.memo_log += "対応 "; st.session_state.last = "対応"
+# 2段目（3列）
+c8, c9, c10 = st.columns(3)
 with c8:
     if st.button(label("ミッション")): 
         st.session_state.memo_log += "ミッション "; st.session_state.last = "ミッション"
@@ -83,7 +82,7 @@ with c13:
 # --- 出力エリア ---
 st.divider()
 st.subheader("出力結果")
-st.text_area("メモ帳用テキスト", value=st.session_state.memo_log, height=300)
+st.text_area("コピー用", value=st.session_state.memo_log, height=300)
 
 if st.button("履歴をすべてリセット"):
     st.session_state.memo_log = ""; st.session_state.last = ""; st.rerun()
