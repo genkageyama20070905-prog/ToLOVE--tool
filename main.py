@@ -22,6 +22,33 @@ def update_and_save(text, action):
     st.query_params["log"] = st.session_state.memo_log
 
 st.title("メモ")
+# --- 画面中央・右寄りに現在の入力を固定表示する設定 ---
+latest_line = st.session_state.memo_log.split('\n')[-1] if st.session_state.memo_log else "なし"
+
+st.markdown(f"""
+    <style>
+    .floating-box {{
+        position: fixed;
+        top: 50%;         /* 画面の中央（縦） */
+        right: 10px;      /* 右端から10px */
+        transform: translateY(-50%); /* 中央にぴったり合わせる */
+        width: 120px;     /* 幅（お好みで調整） */
+        background-color: rgba(255, 255, 255, 0.9); /* 半透明の白 */
+        border: 2px solid #333;
+        border-radius: 10px;
+        padding: 10px;
+        z-index: 1000;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+        word-wrap: break-word; /* 長い時に折り返す */
+    }}
+    </style>
+    <div class="floating-box">
+        <span style="font-size: 10px; color: #666;">現在の行:</span><br>
+        {latest_line}
+    </div>
+    """, unsafe_allow_index=True)
 
 # --- 直前の操作を表示 ---
 st.info(f"💡 最後に押したボタン: **{st.session_state.last_action}**")
